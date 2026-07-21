@@ -1,0 +1,15 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: leasecheck-db
+    environment:
+      POSTGRES_USER: leasecheck
+      POSTGRES_PASSWORD: localdev
+      POSTGRES_DB: leasecheck
+    ports:
+      - "5432:5432"
+    volumes:
+      - leasecheck_pgdata:/var/lib/postgresql/data
+
+volumes:
+  leasecheck_pgdata:
