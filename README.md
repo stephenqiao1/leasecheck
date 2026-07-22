@@ -18,6 +18,16 @@ Tenancies Act) with a corpus of **12 rules**, and has been evaluated against a
 [Limitations](#limitations) — the accuracy numbers reflect that narrow scope and
 should not be read as validated real-world performance.
 
+## Demo
+
+![Scripted walkthrough of the reviewer UI: opening a reviewed lease, scrolling the annotated document, and triaging findings](demo/leasecheck-demo.gif)
+
+A scripted walkthrough of the real app against the synthetic Ontario fixture:
+opening a reviewed lease by ID, the marked-up document with verdict rails and
+margin annotations, and live accept/dismiss triage updating the
+pending-violations counter. Full quality:
+[demo/leasecheck-demo.mp4](demo/leasecheck-demo.mp4).
+
 ## Architecture
 
 The pipeline has four stages. A lease moves left to right; each stage's output is
