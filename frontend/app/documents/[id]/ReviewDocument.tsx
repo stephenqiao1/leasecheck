@@ -110,6 +110,9 @@ export default function ReviewDocument({ data }: { data: ReviewView }) {
       <div className={styles.doc}>
         {data.clauses.map((clause) => {
           const finding = clause.finding;
+          // Human-facing clause number: ordinal is 0-based in the DB, but the
+          // document's own numbering (and the answer key) is 1-based.
+          const clauseNumber = clause.ordinal + 1;
           const status = finding ? statusOf(finding.id, finding.status) : null;
           const railClass = finding
             ? `${RAIL[finding.verdict]} ${
@@ -120,7 +123,7 @@ export default function ReviewDocument({ data }: { data: ReviewView }) {
           return (
             <article key={clause.id} className={styles.clauseRow}>
               <p className={`${styles.clauseText} ${railClass}`}>
-                <span className={styles.ordinal}>{clause.ordinal}</span>
+                <span className={styles.ordinal}>{clauseNumber}</span>
                 {clause.text}
               </p>
 
@@ -151,7 +154,7 @@ export default function ReviewDocument({ data }: { data: ReviewView }) {
                         type="button"
                         className={styles.actionBtn}
                         disabled={pending[finding.id]}
-                        aria-label={`Accept finding on clause ${clause.ordinal}`}
+                        aria-label={`Accept finding on clause ${clauseNumber}`}
                         onClick={() =>
                           changeStatus(finding.id, finding.status, "accepted")
                         }
@@ -164,7 +167,7 @@ export default function ReviewDocument({ data }: { data: ReviewView }) {
                         type="button"
                         className={styles.actionBtn}
                         disabled={pending[finding.id]}
-                        aria-label={`Dismiss finding on clause ${clause.ordinal}`}
+                        aria-label={`Dismiss finding on clause ${clauseNumber}`}
                         onClick={() =>
                           changeStatus(finding.id, finding.status, "dismissed")
                         }
