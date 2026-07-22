@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+/* Restrained, paper-like near-monochrome palette. Color is reserved for
+   verdict signalling only (see the --verdict-* tokens). */
+:root {
+  --paper: #faf9f6;
+  --ink: #1c1a17;
+  --ink-soft: #55504a;
+  --ink-faint: #8f8a82;
+  --rule-line: #e6e3dd;
+
+  --verdict-violation: #a51f16;
+  --verdict-unclear: #9a6300;
+  --verdict-ok: #c7c3bb;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}

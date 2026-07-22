@@ -1,0 +1,296 @@
+.page {
+  min-height: 100%;
+}
+
+/* ---- Sticky header (UI chrome) ---- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule-line);
+  padding: 0.7rem 2rem;
+}
+
+.headerInner {
+  max-width: 64rem;
+  margin: 0 auto;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.docTitle {
+  font-family: var(--font-serif), serif;
+  font-size: 1.5rem;
+  line-height: 1.1;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meta {
+  display: flex;
+  gap: 1.75rem;
+  flex-shrink: 0;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.6875rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.metaVal {
+  color: var(--ink-soft);
+  font-weight: 600;
+  margin-left: 0.4rem;
+}
+
+.metaViolation {
+  color: var(--verdict-violation);
+}
+
+/* ---- Document body: reading column + margin notes ---- */
+.doc {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 3.5rem 2rem 7rem;
+}
+
+.clauseRow {
+  display: grid;
+  grid-template-columns: minmax(0, 40rem) 15rem;
+  column-gap: 3rem;
+  align-items: start;
+  padding: 0.35rem 0;
+}
+
+.clauseText {
+  font-family: var(--font-serif), serif;
+  font-size: 1.35rem;
+  line-height: 1.75;
+  color: var(--ink);
+  border-left: 3px solid transparent;
+  padding-left: 1.5rem;
+}
+
+/* Verdict rail — the only place color is allowed on the reading column. */
+.railViolation {
+  border-left-color: var(--verdict-violation);
+}
+.railUnclear {
+  border-left-color: var(--verdict-unclear);
+}
+.railOk {
+  border-left-color: var(--verdict-ok);
+}
+
+.ordinal {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--ink-faint);
+  vertical-align: 0.35em;
+  margin-right: 0.6rem;
+  letter-spacing: 0.02em;
+}
+
+/* ---- Margin annotation ---- */
+.annotation {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  padding-top: 0.55rem;
+}
+
+.verdictTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--verdict-ok);
+}
+.dot_violation {
+  background: var(--verdict-violation);
+}
+.dot_unclear {
+  background: var(--verdict-unclear);
+}
+.dot_ok {
+  background: var(--verdict-ok);
+}
+
+.ruleCode {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.75rem;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  margin-top: 0.6rem;
+}
+
+.ruleTitle {
+  font-family: var(--font-sans), sans-serif;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  color: var(--ink);
+  margin-top: 0.15rem;
+}
+
+.rationale {
+  margin-top: 0.5rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.statusLabel {
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.actionBtn {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+  transition: color 0.12s ease, border-color 0.12s ease;
+}
+.actionBtn:hover:not(:disabled) {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+.actionBtn:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  color: var(--ink);
+}
+.actionBtn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.actionError {
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  color: var(--verdict-violation);
+}
+
+/* ---- Triage states ---- */
+.statusPending {
+  color: var(--ink-faint);
+}
+.statusAccepted {
+  color: var(--ink);
+  font-weight: 600;
+}
+.statusDismissed {
+  color: var(--ink-faint);
+}
+
+/* Accepted findings hold full emphasis; a dismissed finding recedes but stays
+   legible. */
+.annotationDismissed {
+  opacity: 0.5;
+}
+
+/* Defined after the .rail* color rules so it overrides the border color for a
+   dismissed clause, quieting its rail. */
+.railMuted {
+  border-left-color: var(--verdict-ok);
+}
+
+/* ---- Empty state ---- */
+.empty {
+  max-width: 38rem;
+  margin: 4.5rem auto 0;
+  padding: 0 2rem;
+  text-align: center;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.emptyTitle {
+  font-family: var(--font-serif), serif;
+  font-size: 1.9rem;
+  color: var(--ink);
+  margin-bottom: 0.6rem;
+}
+
+/* ---- Status / loading / error scaffolding ---- */
+.status {
+  max-width: 40rem;
+  margin: 5rem auto;
+  padding: 0 2rem;
+  text-align: center;
+  font-family: var(--font-sans), sans-serif;
+  color: var(--ink-soft);
+}
+.statusTitle {
+  font-family: var(--font-serif), serif;
+  font-size: 1.6rem;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+.retryBtn {
+  margin-top: 1.25rem;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: none;
+  border: 1px solid var(--rule-line);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+.retryBtn:hover {
+  border-color: var(--ink-faint);
+}
+.backLink {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Stack the margin notes beneath their clause on narrow viewports. */
+@media (max-width: 60rem) {
+  .clauseRow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .annotation {
+    grid-column: 1;
+    max-width: 40rem;
+    margin: 0.4rem 0 0 1.5rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--rule-line);
+  }
+}
