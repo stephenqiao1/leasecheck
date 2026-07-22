@@ -1,0 +1,277 @@
+{
+  "timestamp": "2026-07-22T04:34:13.131622+00:00",
+  "run_index": 2,
+  "config": {
+    "review_model": "gpt-5.6",
+    "embedding_model": "text-embedding-3-small",
+    "retrieval_k": 8,
+    "jurisdiction": "ON",
+    "runs": 3
+  },
+  "inputs": {
+    "pdf": "/Users/sqiao01/Desktop/Projects/leasecheck/backend/eval/sample_lease_ontario.pdf",
+    "answer_key": "/Users/sqiao01/Desktop/Projects/leasecheck/backend/eval/sample_lease_answer_key.json",
+    "document_id": null,
+    "runs": 3
+  },
+  "counts": {
+    "tp": 12,
+    "fp": 0,
+    "fn": 0,
+    "tn": 12,
+    "total": 24
+  },
+  "detection": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "accuracy": 1.0
+  },
+  "attribution": {
+    "correct": 12,
+    "true_positives": 12,
+    "accuracy": 1.0
+  },
+  "clauses": [
+    {
+      "clause_number": 1,
+      "expected_verdict": "ok",
+      "predicted_verdict": "ok",
+      "expected_rule_code": null,
+      "predicted_rule_code": null,
+      "outcome": "TN",
+      "rule_match": false,
+      "rationale": "The clause only identifies the parties and rental unit; none of the candidate rules apply."
+    },
+    {
+      "clause_number": 2,
+      "expected_verdict": "ok",
+      "predicted_verdict": "ok",
+      "expected_rule_code": null,
+      "predicted_rule_code": null,
+      "outcome": "TN",
+      "rule_match": false,
+      "rationale": "The fixed-term tenancy dates do not concern or conflict with any of the candidate rules."
+    },
+    {
+      "clause_number": 3,
+      "expected_verdict": "ok",
+      "predicted_verdict": "ok",
+      "expected_rule_code": null,
+      "predicted_rule_code": null,
+      "outcome": "TN",
+      "rule_match": false,
+      "rationale": "The clause only states the monthly rent amount and payment date; it does not conflict with any provided rule."
+    },
+    {
+      "clause_number": 4,
+      "expected_verdict": "ok",
+      "predicted_verdict": "ok",
+      "expected_rule_code": null,
+      "predicted_rule_code": null,
+      "outcome": "TN",
+      "rule_match": false,
+      "rationale": "The clause requires a last-month rent deposit of one month's rent and applies it only to the final rental period, consistent with ON-DEPOSIT-CAP and ON-NO-EXTRA-DEPOSITS."
+    },
+    {
+      "clause_number": 5,
+      "expected_verdict": "violation",
+      "predicted_verdict": "violation",
+      "expected_rule_code": "ON-NO-EXTRA-DEPOSITS",
+      "predicted_rule_code": "ON-NO-EXTRA-DEPOSITS",
+      "outcome": "TP",
+      "rule_match": true,
+      "rationale": "The clause requires a security and damage deposit, which is expressly prohibited by ON-NO-EXTRA-DEPOSITS."
+    },
+    {
+      "clause_number": 6,
+      "expected_verdict": "violation",
+      "predicted_verdict": "violation",
+      "expected_rule_code": "ON-NO-EXTRA-DEPOSITS",
+      "predicted_rule_code": "ON-NO-EXTRA-DEPOSITS",
+      "outcome": "TP",
+      "rule_match": true,
+      "rationale": "The clause requires a non-refundable pet deposit, which is expressly prohibited by ON-NO-EXTRA-DEPOSITS."
+    },
+    {
+      "clause_number": 7,
+      "expected_verdict": "violation",
+      "predicted_verdict": "violation",
+      "expected_rule_code": "ON-NO-PET-BAN",
+      "predicted_rule_code": "ON-NO-PET-BAN",
+      "outcome": "TP",
+      "rule_match": true,
+      "rationale": "The clause expressly prohibits all pets and animals in the unit and on the property, violating ON-NO-PET-BAN."
+    },
+    {
+      "clause_number": 8,
+      "expected_verdict": "ok",
+      "predicted_verdict": "ok",
+      "expected_rule_code": null,
+      "predicted_rule_code": null,
+      "outcome": "TN",
+      "rule_match": false,
+      "rationale": "The clause permits only a refundable key deposit and caps it at the actual replacement cost of the keys, which is consistent with ON-NO-EXTRA-DEPOSITS."
+    },
+    {
+      "clause_number": 9,
+      "expected_verdict": "violation",
+      "predicted_verdict": "violation",
+      "expected_rule_code": "ON-NO-GUEST-BAN",
+      "predicted_rule_code": "ON-NO-GUEST-BAN",
+      "outcome": "TP",
+      "rule_match": true,
+      "rationale": "The clause requires landlord permission for overnight guests and imposes a per-night guest fee, both prohibited by ON-NO-GUEST-BAN."
+    },
+    {
+      "clause_number": 10,
+      "expected_verdict": "violation",
+      "predicted_verdict": "violation",
+      "expected_rule_code": "ON-ENTRY-NOTICE",
+      "predicted_rule_code": "ON-ENTRY-NOTICE",
+      "outcome": "TP",
+      "rule_match": true,
+      "rationale": "The clause permits entry at any time without prior notice for inspections or maintenance, contrary to ON-ENTRY-NOTICE, which generally requires at least 24 hours\u2019 written notice and entry between 8 a.m. and 8 p.m."
+    },
+    {
+      "clause_number": 11,
+      "expected_verdict": "ok",
+      "predicted_verdict": "ok",
+      "expected_rule_code": null,
+      "predicted_rule_code": null,
+      "outcome": "TN",
+      "rule_match": false,
+      "rationale": "The clause concerns the tenant's responsibility for cleanliness and does not impose a cleaning fee or otherwise conflict with any candidate rule."
+    },
+    {
+      "clause_number": 12,
+      "expected_verdict": "ok",
+      "predicted_verdict": "ok",
+      "expected_rule_code": null,
+      "predicted_rule_code": null,
+      "outcome": "TN",
+      "rule_match": false,
+      "rationale": "The clause assigns responsibility for repairing tenant- or guest-caused damage but does not require a prohibited deposit or otherwise conflict with any candidate rule."
+    },
+    {
+      "clause_number": 13,
+      "expected_verdict": "violation",
+      "predicted_verdict": "violation",
+      "expected_rule_code": "ON-NSF-CAP",
+      "predicted_rule_code": "ON-NSF-CAP",
+      "outcome": "TP",
+      "rule_match": true,
+      "rationale": "The $75 administration charge exceeds the $20 cap under ON-NSF-CAP; only separate charges imposed by the landlord's bank may be added."
+    },
+    {
+      "clause_number": 14,
+      "expected_verdict": "violation",
+      "predicted_verdict": "violation",
+      "expected_rule_code": "ON-NO-POSTDATED",
+      "predicted_rule_code": "ON-NO-POSTDATED",
+      "outcome": "TP",
+      "rule_match": true,
+      "rationale": "The clause requires the tenant to provide post-dated cheques, which is prohibited by ON-NO-POSTDATED; this payment method may only be chosen voluntarily."
+    },
+    {
+      "clause_number": 15,
+      "expected_verdict": "violation",
+      "predicted_verdict": "violation",
+      "expected_rule_code": "ON-RENT-INCREASE-NOTICE",
+      "predicted_rule_code": "ON-RENT-INCREASE-NOTICE",
+      "outcome": "TP",
+      "rule_match": true,
+      "rationale": "The clause allows rent increases at any time with only 30 days' notice, contrary to ON-RENT-INCREASE-NOTICE, which requires at least 90 days' written notice and generally permits increases only once every 12 months."
+    },
+    {
+      "clause_number": 16,
+      "expected_verdict": "violation",
+      "predicted_verdict": "violation",
+      "expected_rule_code": "ON-DEPOSIT-INTEREST",
+      "predicted_rule_code": "ON-DEPOSIT-INTEREST",
+      "outcome": "TP",
+      "rule_match": true,
+      "rationale": "The clause states that no interest will be paid on any deposit, contrary to ON-DEPOSIT-INTEREST, which requires annual interest on the rent deposit."
+    },
+    {
+      "clause_number": 17,
+      "expected_verdict": "ok",
+      "predicted_verdict": "ok",
+      "expected_rule_code": null,
+      "predicted_rule_code": null,
+      "outcome": "TN",
+      "rule_match": false,
+      "rationale": "The clause merely makes contents insurance optional and does not conflict with any of the candidate rules."
+    },
+    {
+      "clause_number": 18,
+      "expected_verdict": "violation",
+      "predicted_verdict": "violation",
+      "expected_rule_code": "ON-SUBLET-CONSENT",
+      "predicted_rule_code": "ON-SUBLET-CONSENT",
+      "outcome": "TP",
+      "rule_match": true,
+      "rationale": "The clause imposes an absolute ban on assignment or subletting, contrary to ON-SUBLET-CONSENT, which permits these with landlord consent and prohibits arbitrary or unreasonable refusal."
+    },
+    {
+      "clause_number": 19,
+      "expected_verdict": "ok",
+      "predicted_verdict": "ok",
+      "expected_rule_code": null,
+      "predicted_rule_code": null,
+      "outcome": "TN",
+      "rule_match": false,
+      "rationale": "The clause imposes a general repair and habitability obligation and does not conflict with or trigger any of the provided candidate rules."
+    },
+    {
+      "clause_number": 20,
+      "expected_verdict": "violation",
+      "predicted_verdict": "violation",
+      "expected_rule_code": "ON-VITAL-SERVICES",
+      "predicted_rule_code": "ON-VITAL-SERVICES",
+      "outcome": "TP",
+      "rule_match": true,
+      "rationale": "The clause violates ON-VITAL-SERVICES because it allows the landlord to deliberately shut off electricity, heat, or water due to late rent."
+    },
+    {
+      "clause_number": 21,
+      "expected_verdict": "violation",
+      "predicted_verdict": "violation",
+      "expected_rule_code": "ON-LOCK-CHANGE",
+      "predicted_rule_code": "ON-LOCK-CHANGE",
+      "outcome": "TP",
+      "rule_match": true,
+      "rationale": "The clause allows the landlord to change the locks without immediately giving replacement keys to the tenant, contrary to ON-LOCK-CHANGE."
+    },
+    {
+      "clause_number": 22,
+      "expected_verdict": "ok",
+      "predicted_verdict": "ok",
+      "expected_rule_code": null,
+      "predicted_rule_code": null,
+      "outcome": "TN",
+      "rule_match": false,
+      "rationale": "The candidate rules do not address restrictions on smoking, so none apply to this clause."
+    },
+    {
+      "clause_number": 23,
+      "expected_verdict": "ok",
+      "predicted_verdict": "ok",
+      "expected_rule_code": null,
+      "predicted_rule_code": null,
+      "outcome": "TN",
+      "rule_match": false,
+      "rationale": "The clause only requires the tenant to establish and pay for electricity service directly; it does not authorize the landlord to withhold or interfere with a vital service. None of the listed rules prohibit this arrangement."
+    },
+    {
+      "clause_number": 24,
+      "expected_verdict": "ok",
+      "predicted_verdict": "ok",
+      "expected_rule_code": null,
+      "predicted_rule_code": null,
+      "outcome": "TN",
+      "rule_match": false,
+      "rationale": "This severability clause does not conflict with any of the candidate rules; it states that terms conflicting with the legislation are void."
+    }
+  ]
+}

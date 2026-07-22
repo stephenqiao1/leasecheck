@@ -1,0 +1,152 @@
+{
+  "document": "sample_lease_ontario.pdf",
+  "jurisdiction": "ON",
+  "total_clauses": 24,
+  "violations": 12,
+  "labels": [
+    {
+      "clause_number": 1,
+      "verdict": "ok",
+      "rule_code": null,
+      "note": "Standard parties and premises clause."
+    },
+    {
+      "clause_number": 2,
+      "verdict": "ok",
+      "rule_code": null,
+      "note": "Standard fixed-term clause."
+    },
+    {
+      "clause_number": 3,
+      "verdict": "ok",
+      "rule_code": null,
+      "note": "Standard rent amount and due date."
+    },
+    {
+      "clause_number": 4,
+      "verdict": "ok",
+      "rule_code": null,
+      "note": "A last-month deposit of one month's rent is expressly permitted."
+    },
+    {
+      "clause_number": 5,
+      "verdict": "violation",
+      "rule_code": "ON-NO-EXTRA-DEPOSITS",
+      "note": "Damage/security deposits are not permitted under the RTA."
+    },
+    {
+      "clause_number": 6,
+      "verdict": "violation",
+      "rule_code": "ON-NO-EXTRA-DEPOSITS",
+      "note": "Pet deposits (and non-refundable deposits generally) are not permitted."
+    },
+    {
+      "clause_number": 7,
+      "verdict": "violation",
+      "rule_code": "ON-NO-PET-BAN",
+      "note": "A tenancy agreement cannot prohibit pets; no-pet clauses are void."
+    },
+    {
+      "clause_number": 8,
+      "verdict": "ok",
+      "rule_code": null,
+      "note": "Refundable key deposit at replacement cost is permitted."
+    },
+    {
+      "clause_number": 9,
+      "verdict": "violation",
+      "rule_code": "ON-NO-GUEST-BAN",
+      "note": "Landlord cannot require permission for guests or charge guest fees."
+    },
+    {
+      "clause_number": 10,
+      "verdict": "violation",
+      "rule_code": "ON-ENTRY-NOTICE",
+      "note": "Entry requires 24 hours' written notice except in emergencies or with consent."
+    },
+    {
+      "clause_number": 11,
+      "verdict": "ok",
+      "rule_code": null,
+      "note": "Standard tenant cleanliness obligation."
+    },
+    {
+      "clause_number": 12,
+      "verdict": "ok",
+      "rule_code": null,
+      "note": "Standard tenant damage responsibility, consistent with the RTA."
+    },
+    {
+      "clause_number": 13,
+      "verdict": "violation",
+      "rule_code": "ON-NSF-CAP",
+      "note": "The NSF administration charge cannot exceed 20 dollars."
+    },
+    {
+      "clause_number": 14,
+      "verdict": "violation",
+      "rule_code": "ON-NO-POSTDATED",
+      "note": "A tenant cannot be required to provide post-dated cheques."
+    },
+    {
+      "clause_number": 15,
+      "verdict": "violation",
+      "rule_code": "ON-RENT-INCREASE-NOTICE",
+      "note": "Rent increases require 90 days' notice, once per 12 months, capped by the guideline."
+    },
+    {
+      "clause_number": 16,
+      "verdict": "violation",
+      "rule_code": "ON-DEPOSIT-INTEREST",
+      "note": "The landlord must pay annual interest on the rent deposit."
+    },
+    {
+      "clause_number": 17,
+      "verdict": "ok",
+      "rule_code": null,
+      "note": "Contents insurance is the tenant's choice; a standard clause."
+    },
+    {
+      "clause_number": 18,
+      "verdict": "violation",
+      "rule_code": "ON-SUBLET-CONSENT",
+      "note": "An absolute ban is void; the landlord cannot unreasonably withhold consent."
+    },
+    {
+      "clause_number": 19,
+      "verdict": "ok",
+      "rule_code": null,
+      "note": "Standard landlord maintenance obligation, consistent with the RTA."
+    },
+    {
+      "clause_number": 20,
+      "verdict": "violation",
+      "rule_code": "ON-VITAL-SERVICES",
+      "note": "A landlord cannot withhold or shut off vital services."
+    },
+    {
+      "clause_number": 21,
+      "verdict": "violation",
+      "rule_code": "ON-LOCK-CHANGE",
+      "note": "A landlord cannot change the locks without giving the tenant new keys."
+    },
+    {
+      "clause_number": 22,
+      "verdict": "ok",
+      "rule_code": null,
+      "note": "Landlord and tenant may agree to prohibit smoking in the unit."
+    },
+    {
+      "clause_number": 23,
+      "verdict": "ok",
+      "rule_code": null,
+      "note": "Assigning utility responsibility to the tenant is permitted if specified."
+    },
+    {
+      "clause_number": 24,
+      "verdict": "ok",
+      "rule_code": null,
+      "note": "A standard severability clause; consistent with the Act."
+    }
+  ]
+}

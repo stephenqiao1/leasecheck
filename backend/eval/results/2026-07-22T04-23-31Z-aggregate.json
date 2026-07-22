@@ -1,0 +1,66 @@
+{
+  "timestamp": "2026-07-22T04:23:31.461545+00:00",
+  "config": {
+    "review_model": "gpt-5.6",
+    "embedding_model": "text-embedding-3-small",
+    "retrieval_k": 4,
+    "jurisdiction": "ON",
+    "runs": 3
+  },
+  "inputs": {
+    "pdf": "/Users/sqiao01/Desktop/Projects/leasecheck/backend/eval/sample_lease_ontario.pdf",
+    "answer_key": "/Users/sqiao01/Desktop/Projects/leasecheck/backend/eval/sample_lease_answer_key.json",
+    "document_id": null,
+    "runs": 3
+  },
+  "runs": 3,
+  "run_files": [
+    "2026-07-22T04-23-31Z-run1.json",
+    "2026-07-22T04-23-31Z-run2.json",
+    "2026-07-22T04-23-31Z-run3.json"
+  ],
+  "metrics": {
+    "precision": {
+      "mean": 1.0,
+      "std": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "recall": {
+      "mean": 1.0,
+      "std": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "f1": {
+      "mean": 1.0,
+      "std": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "attribution_accuracy": {
+      "mean": 1.0,
+      "std": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  },
+  "stability": {
+    "total_clauses": 24,
+    "stable_clauses": 24,
+    "unstable_clauses": 0
+  },
+  "unstable_clauses": []
+}
