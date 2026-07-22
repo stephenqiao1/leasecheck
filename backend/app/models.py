@@ -35,6 +35,7 @@ class Clause(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
     document: Mapped["Document"] = relationship(back_populates="clauses")
+    findings: Mapped[list["Finding"]] = relationship(back_populates="clause", cascade="all, delete-orphan")
 
 class Rule(Base):
     __tablename__ = "rules"
@@ -46,3 +47,17 @@ class Rule(Base):
     description: Mapped[str] = mapped_column(Text)
     embedding: Mapped[list[float] | None] = mapped_column(Vector(1536), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+class Finding(Base):
+    __tablename__ = "findings"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    clause_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("clauses.id", ondelete="CASCADE"))
+    rule_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("rules.id", ondelete="SET NULL"), nullable=True)
+    verdict: Mapped[str] = mapped_column(String(20))          # ok / violation / unclear
+    rationale: Mapped[str] = mapped_column(Text)
+    status: Mapped[str] = mapped_column(String(20), default="pending")  # pending/accepted/dismissed
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+    clause: Mapped["Clause"] = relationship(back_populates="findings")
+    rule: Mapped["Rule | None"] = relationship()

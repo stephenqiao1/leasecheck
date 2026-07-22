@@ -8,6 +8,7 @@ from app.db import engine, get_db
 from app.models import Document, Clause, Rule
 from app.ingest import extract_text, split_into_clauses, UnreadablePDF
 from app.embeddings import embed_one
+from app.review import review_document
 
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
@@ -86,3 +87,41 @@ def relevant_rules(clause_id: str, k: int = 3, db: Session = Depends(get_db)):
             for r, dist in rows
         ],
     }
+
+@app.post("/documents/{document_id}/review")
+def review_document_endpoint(document_id: str, db: Session = Depends(get_db)):
+    doc = db.get(Document, document_id)
+    if doc is None:
+        raise HTTPException(status_code=404, detail="Document not found")
+
+    # Clear any prior findings so re-running is idempotent
+    for clause in doc.clauses:
+        for f in list(clause.findings):
+            db.delete(f)
+    db.flush()
+
+    findings = review_document(db, list(doc.clauses))
+    doc.status = "reviewed"
+    db.commit()
+
+    violations = sum(1 for f in findings if f.verdict == "violation")
+    return {"document_id": document_id, "clauses_reviewed": len(findings),
+            "violations": violations, "status": doc.status}
+
+@app.get("/documents/{document_id}/findings")
+def list_findings(document_id: str, db: Session = Depends(get_db)):
+    doc = db.get(Document, document_id)
+    if doc is None:
+        raise HTTPException(status_code=404, detail="Document not found")
+    results = []
+    for clause in doc.clauses:
+        for f in clause.findings:
+            results.append({
+                "clause_ordinal": clause.ordinal,
+                "clause_preview": clause.text[:100],
+                "verdict": f.verdict,
+                "rule_code": f.rule.code if f.rule else None,
+                "rationale": f.rationale,
+                "status": f.status,
+            })
+    return {"document_id": document_id, "findings": results}
