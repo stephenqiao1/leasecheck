@@ -1,11 +1,15 @@
 import os
 import shutil
+from typing import Literal
+
 from fastapi import FastAPI, UploadFile, File, Form, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from sqlalchemy import text, select
 from sqlalchemy.orm import Session
 
 from app.db import engine, get_db
-from app.models import Document, Clause, Rule
+from app.models import Document, Clause, Rule, Finding
 from app.ingest import extract_text, split_into_clauses, UnreadablePDF
 from app.embeddings import embed_one
 from app.review import review_document
@@ -14,6 +18,13 @@ UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 app = FastAPI(title="LeaseCheck API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/health")
 def health():
@@ -125,3 +136,59 @@ def list_findings(document_id: str, db: Session = Depends(get_db)):
                 "status": f.status,
             })
     return {"document_id": document_id, "findings": results}
+
+@app.get("/documents/{document_id}/review-view")
+def review_view(document_id: str, db: Session = Depends(get_db)):
+    doc = db.get(Document, document_id)
+    if doc is None:
+        raise HTTPException(status_code=404, detail="Document not found")
+
+    clauses = []
+    violation_count = 0
+    for clause in doc.clauses:
+        finding = clause.findings[0] if clause.findings else None
+        if finding is not None and finding.verdict == "violation":
+            violation_count += 1
+        clauses.append({
+            "id": str(clause.id),
+            "ordinal": clause.ordinal,
+            "text": clause.text,
+            "finding": {
+                "id": str(finding.id),
+                "verdict": finding.verdict,
+                "rule_code": finding.rule.code if finding.rule else None,
+                "rule_title": finding.rule.title if finding.rule else None,
+                "rationale": finding.rationale,
+                "status": finding.status,
+            } if finding is not None else None,
+        })
+
+    return {
+        "document_id": str(doc.id),
+        "filename": doc.filename,
+        "jurisdiction": doc.jurisdiction,
+        "status": doc.status,
+        "clause_count": len(doc.clauses),
+        "violation_count": violation_count,
+        "clauses": clauses,
+    }
+
+class FindingStatusUpdate(BaseModel):
+    status: Literal["accepted", "dismissed", "pending"]
+
+@app.patch("/findings/{finding_id}")
+def update_finding(finding_id: str, body: FindingStatusUpdate, db: Session = Depends(get_db)):
+    finding = db.get(Finding, finding_id)
+    if finding is None:
+        raise HTTPException(status_code=404, detail="Finding not found")
+
+    finding.status = body.status
+    db.commit()
+    return {
+        "id": str(finding.id),
+        "clause_id": str(finding.clause_id),
+        "verdict": finding.verdict,
+        "rule_code": finding.rule.code if finding.rule else None,
+        "rationale": finding.rationale,
+        "status": finding.status,
+    }
