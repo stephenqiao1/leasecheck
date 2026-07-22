@@ -24,21 +24,41 @@ def extract_text(path: str) -> tuple[str, int]:
         )
     return text, len(reader.pages)
 
-def split_into_clauses(text: str) -> list[dict]:
-    """Naive clause splitter: one clause per paragraph (block of non-blank lines).
-    Tracks character offsets so the UI can highlight the exact span later.
+def _split_numbered(text: str) -> list[dict] | None:
+    """Split on numbered clause markers like '1. ' at the start of a line.
+    Returns None if fewer than 3 markers are found (not a numbered document).
     """
+    marker = re.compile(r"(?m)^\s*(\d+)\.\s")
+    matches = list(marker.finditer(text))
+    if len(matches) < 3:
+        return None
+
     clauses = []
     ordinal = 0
-    for match in re.finditer(r"[^\n]+(?:\n[^\n]+)*", text):
-        block = match.group().strip()
-        if len(block) < 25:  # skip page numbers, headers, stray fragments
+    for i, m in enumerate(matches):
+        start = m.start()
+        end = matches[i + 1].start() if i + 1 < len(matches) else len(text)
+        block = text[start:end].strip()
+        if len(block) < 15:
             continue
-        clauses.append({
-            "ordinal": ordinal,
-            "text": block,
-            "char_start": match.start(),
-            "char_end": match.end(),
-        })
+        clauses.append({"ordinal": ordinal, "text": block,
+                        "char_start": start, "char_end": end})
         ordinal += 1
     return clauses
+
+def _split_paragraphs(text: str) -> list[dict]:
+    """Fallback: one clause per paragraph (block of non-blank lines)."""
+    clauses = []
+    ordinal = 0
+    for m in re.finditer(r"[^\n]+(?:\n[^\n]+)*", text):
+        block = m.group().strip()
+        if len(block) < 25:
+            continue
+        clauses.append({"ordinal": ordinal, "text": block,
+                        "char_start": m.start(), "char_end": m.end()})
+        ordinal += 1
+    return clauses
+
+def split_into_clauses(text: str) -> list[dict]:
+    """Prefer numbered-clause splitting; fall back to paragraph splitting."""
+    return _split_numbered(text) or _split_paragraphs(text)
